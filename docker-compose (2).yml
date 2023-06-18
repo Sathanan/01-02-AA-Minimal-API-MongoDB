@@ -1,0 +1,23 @@
+version: '3'
+services:
+  webapi:
+    build:
+      context: ./minimal-api-with-mongodb/WebApi
+      dockerfile: Dockerfile
+    ports:
+      - 5001:80
+    depends_on:
+      - mongodb
+    environment:
+      - MoviesDatabaseSettings__ConnectionString=mongodb://gbs:geheim@mongodb:27017
+
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
